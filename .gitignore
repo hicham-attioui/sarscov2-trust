@@ -6,3 +6,4 @@ results/*/*.bam
 results/*/*.bai
 results/*/*.html
 results/*/*.depth.txt
+*Zone.Identifier
