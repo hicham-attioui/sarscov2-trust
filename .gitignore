@@ -7,3 +7,5 @@ results/*/*.bai
 results/*/*.html
 results/*/*.depth.txt
 *Zone.Identifier
+logs/
+.Rhistory
