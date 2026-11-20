@@ -1,0 +1,49 @@
+sample	who	lineage	cause	positions
+ERR5181310	Eta	B.1.525	Missing data	0
+ERR5181310	Eta	B.1.525	Outside amplicon scheme	97
+ERR5181310	Eta	B.1.525	Viral deletion	64
+ERR5181360	Eta	B.1.525	Missing data	0
+ERR5181360	Eta	B.1.525	Outside amplicon scheme	71
+ERR5181360	Eta	B.1.525	Viral deletion	60
+ERR5405022	Alpha	B.1.1.7	Missing data	407
+ERR5405022	Alpha	B.1.1.7	Outside amplicon scheme	106
+ERR5405022	Alpha	B.1.1.7	Viral deletion	9
+ERR5556343	Gamma	P.1	Missing data	27
+ERR5556343	Gamma	P.1	Outside amplicon scheme	97
+ERR5556343	Gamma	P.1	Viral deletion	4
+ERR5691945	Beta	B.1.351	Missing data	127
+ERR5691945	Beta	B.1.351	Outside amplicon scheme	81
+ERR5691945	Beta	B.1.351	Viral deletion	14
+ERR5743043	Delta	B.1.617.2	Missing data	0
+ERR5743043	Delta	B.1.617.2	Outside amplicon scheme	51
+ERR5743043	Delta	B.1.617.2	Viral deletion	8
+ERR5743893	Kappa	B.1.617.1	Missing data	292
+ERR5743893	Kappa	B.1.617.1	Outside amplicon scheme	97
+ERR5743893	Kappa	B.1.617.1	Viral deletion	0
+ERR5749609	Delta	B.1.617.2	Missing data	0
+ERR5749609	Delta	B.1.617.2	Outside amplicon scheme	46
+ERR5749609	Delta	B.1.617.2	Viral deletion	8
+ERR5771988	Kappa	B.1.617.1	Missing data	229
+ERR5771988	Kappa	B.1.617.1	Outside amplicon scheme	97
+ERR5771988	Kappa	B.1.617.1	Viral deletion	0
+SRR13422799	Epsilon	B.1.429	Missing data	188
+SRR13422799	Epsilon	B.1.429	Outside amplicon scheme	97
+SRR13422799	Epsilon	B.1.429	Viral deletion	0
+SRR13422802	Epsilon	B.1.427	Missing data	104
+SRR13422802	Epsilon	B.1.427	Outside amplicon scheme	97
+SRR13422802	Epsilon	B.1.427	Viral deletion	0
+SRR13500958	Zeta	P.2	Missing data	0
+SRR13500958	Zeta	P.2	Outside amplicon scheme	93
+SRR13500958	Zeta	P.2	Viral deletion	0
+SRR13511054	Iota	B.1.526	Missing data	0
+SRR13511054	Iota	B.1.526	Outside amplicon scheme	97
+SRR13511054	Iota	B.1.526	Viral deletion	10
+SRR13603869	Epsilon	B.1.427	Missing data	925
+SRR13603869	Epsilon	B.1.427	Outside amplicon scheme	121
+SRR13603869	Epsilon	B.1.427	Viral deletion	0
+SRR13606410	Zeta	P.2	Missing data	0
+SRR13606410	Zeta	P.2	Outside amplicon scheme	97
+SRR13606410	Zeta	P.2	Viral deletion	0
+SRR14241199	Iota	B.1.526	Missing data	17
+SRR14241199	Iota	B.1.526	Outside amplicon scheme	97
+SRR14241199	Iota	B.1.526	Viral deletion	10
