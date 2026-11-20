@@ -1,0 +1,46 @@
+Read1 before filtering:
+total reads: 198314
+total bases: 36482790
+Q20 bases: 35655489(97.7324%)
+Q30 bases: 34026631(93.2676%)
+Q40 bases: 0(0%)
+
+Read2 before filtering:
+total reads: 198314
+total bases: 33351728
+Q20 bases: 31948555(95.7928%)
+Q30 bases: 29810173(89.3812%)
+Q40 bases: 0(0%)
+
+Read1 after filtering:
+total reads: 167525
+total bases: 35118109
+Q20 bases: 34319933(97.7272%)
+Q30 bases: 32735191(93.2146%)
+Q40 bases: 0(0%)
+
+Read2 after filtering:
+total reads: 167525
+total bases: 31992609
+Q20 bases: 30624566(95.7239%)
+Q30 bases: 28533957(89.1892%)
+Q40 bases: 0(0%)
+
+Filtering result:
+reads passed filter: 335050
+reads failed due to low quality: 514
+reads failed due to too many N: 96
+reads failed due to too short: 60968
+reads failed due to adapter dimer: 0
+reads with adapter trimmed: 60
+bases trimmed due to adapters: 1388
+
+Duplication rate: 66.7754%
+
+Insert size peak (evaluated by paired-end reads): 383
+
+JSON report: results/ERR5743893/fastp.json
+HTML report: results/ERR5743893/fastp.html
+
+fastp -i data/raw/ERR5743893_1.fastq.gz -I data/raw/ERR5743893_2.fastq.gz -o results/ERR5743893/ERR5743893_1.trim.fastq.gz -O results/ERR5743893/ERR5743893_2.trim.fastq.gz --length_required 50 --thread 4 --json results/ERR5743893/fastp.json --html results/ERR5743893/fastp.html 
+fastp v1.4.0, time used: 1 seconds

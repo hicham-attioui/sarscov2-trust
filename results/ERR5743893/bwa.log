@@ -1,0 +1,31 @@
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 201504 sequences (40000057 bp)...
+[M::process] read 133546 sequences (27110661 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (4, 98273, 12, 2)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (381, 390, 397)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (349, 429)
+[M::mem_pestat] mean and std.dev: (390.88, 10.77)
+[M::mem_pestat] low and high boundaries for proper pairs: (333, 445)
+[M::mem_pestat] analyzing insert size distribution for orientation RF...
+[M::mem_pestat] (25, 50, 75) percentile: (7351, 8163, 8163)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (5727, 9787)
+[M::mem_pestat] mean and std.dev: (8195.38, 528.79)
+[M::mem_pestat] low and high boundaries for proper pairs: (4915, 10599)
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_pestat] skip orientation RF
+[M::mem_process_seqs] Processed 201504 reads in 5.020 CPU sec, 1.242 real sec
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (1, 65843, 4, 1)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (379, 386, 393)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (351, 421)
+[M::mem_pestat] mean and std.dev: (388.86, 9.71)
+[M::mem_pestat] low and high boundaries for proper pairs: (337, 435)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 133546 reads in 3.659 CPU sec, 0.885 real sec
+[main] Version: 0.7.19-r1273
+[main] CMD: bwa mem -t 4 ref/MN908947.3.fasta results/ERR5743893/ERR5743893_1.trim.fastq.gz results/ERR5743893/ERR5743893_2.trim.fastq.gz
+[main] Real time: 2.439 sec; CPU: 8.990 sec

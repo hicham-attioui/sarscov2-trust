@@ -1,0 +1,26 @@
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 286752 sequences (40000101 bp)...
+[M::process] read 13212 sequences (1832023 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (8, 143345, 6, 4)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (144, 184, 231)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 405)
+[M::mem_pestat] mean and std.dev: (189.74, 63.64)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 492)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 286752 reads in 4.677 CPU sec, 1.227 real sec
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 6605, 0, 1)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (142, 185, 234)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 418)
+[M::mem_pestat] mean and std.dev: (189.79, 65.38)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 510)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 13212 reads in 0.279 CPU sec, 0.057 real sec
+[main] Version: 0.7.19-r1273
+[main] CMD: bwa mem -t 4 ref/MN908947.3.fasta results/ERR5405022/ERR5405022_1.trim.fastq.gz results/ERR5405022/ERR5405022_2.trim.fastq.gz
+[main] Real time: 1.606 sec; CPU: 5.277 sec

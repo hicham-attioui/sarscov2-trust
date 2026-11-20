@@ -1,0 +1,62 @@
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 160866 sequences (40000170 bp)...
+[M::process] read 160796 sequences (40000348 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (9, 79786, 8, 15)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (380, 386, 393)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (354, 419)
+[M::mem_pestat] mean and std.dev: (388.14, 10.31)
+[M::mem_pestat] low and high boundaries for proper pairs: (341, 432)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation RR...
+[M::mem_pestat] (25, 50, 75) percentile: (3462, 4942, 7545)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 15711)
+[M::mem_pestat] mean and std.dev: (4920.40, 2516.04)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 19794)
+[M::mem_pestat] skip orientation RR
+[M::mem_process_seqs] Processed 160866 reads in 5.578 CPU sec, 1.345 real sec
+[M::process] read 81888 sequences (20373632 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (18, 79707, 21, 16)
+[M::mem_pestat] analyzing insert size distribution for orientation FF...
+[M::mem_pestat] (25, 50, 75) percentile: (2350, 8838, 9455)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 23665)
+[M::mem_pestat] mean and std.dev: (6192.56, 3383.53)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 30770)
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (380, 386, 393)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (354, 419)
+[M::mem_pestat] mean and std.dev: (388.14, 10.33)
+[M::mem_pestat] low and high boundaries for proper pairs: (341, 432)
+[M::mem_pestat] analyzing insert size distribution for orientation RF...
+[M::mem_pestat] (25, 50, 75) percentile: (470, 3026, 6605)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 18875)
+[M::mem_pestat] mean and std.dev: (3293.05, 3012.14)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 25010)
+[M::mem_pestat] analyzing insert size distribution for orientation RR...
+[M::mem_pestat] (25, 50, 75) percentile: (1203, 4061, 5405)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 13809)
+[M::mem_pestat] mean and std.dev: (3642.12, 2490.37)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 18011)
+[M::mem_pestat] skip orientation FF
+[M::mem_pestat] skip orientation RF
+[M::mem_pestat] skip orientation RR
+[M::mem_process_seqs] Processed 160796 reads in 5.299 CPU sec, 1.269 real sec
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (7, 40607, 14, 5)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (380, 386, 393)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (354, 419)
+[M::mem_pestat] mean and std.dev: (388.06, 10.24)
+[M::mem_pestat] low and high boundaries for proper pairs: (341, 432)
+[M::mem_pestat] analyzing insert size distribution for orientation RF...
+[M::mem_pestat] (25, 50, 75) percentile: (246, 4719, 6700)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 19608)
+[M::mem_pestat] mean and std.dev: (4020.14, 3126.74)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 26062)
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_pestat] skip orientation RF
+[M::mem_process_seqs] Processed 81888 reads in 2.675 CPU sec, 0.642 real sec
+[main] Version: 0.7.19-r1273
+[main] CMD: bwa mem -t 4 ref/MN908947.3.fasta results/SRR14241199/SRR14241199_1.trim.fastq.gz results/SRR14241199/SRR14241199_2.trim.fastq.gz
+[main] Real time: 3.616 sec; CPU: 13.910 sec

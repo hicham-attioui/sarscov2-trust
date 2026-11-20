@@ -1,0 +1,8 @@
+data/raw/
+data/benchmark/
+ref/nextclade_sars-cov-2/
+ref/*.fasta.*
+results/*/*.bam
+results/*/*.bai
+results/*/*.html
+results/*/*.depth.txt
