@@ -1,0 +1,24 @@
+SRR16298175	CDC_inhouse	Failed sample, high host contamination (62%)
+SRR16298157	CDC_inhouse	Failed sample, low phred score leading to insufficient paired reads
+SRR16298173	CDC_inhouse	Failed sample, ambigous sites (Ns) >3000
+SRR16298172	CDC_inhouse	Failed sample, low coverage
+SRR16298171	CDC_inhouse	Failed sample, VADR alert >1
+SRR16298170	CDC_inhouse	Failed positive control, ambigous sites (Ns) > 3000, amplicon dropout
+SRR16298169	CDC_inhouse	Failed positive control, ambigous sites (Ns) > 3000
+SRR16298168	CDC_inhouse	Failed positive control, long stretch of Ns > 100
+SRR16298167	CDC_inhouse	Failed negative control (non-template control), contamination
+SRR16298166	CDC_inhouse	Failed negative control (non-template control), contamination
+SRR16298165	CDC_inhouse	Failed Negative control (water), contamination
+SRR16298174	CDC_inhouse	Failed sample, low coverage, high host contamination (87%)
+SRR16298164	CDC_inhouse	Failed sample, high host contamination (96%)
+SRR16298163	CDC_inhouse	Failed sample, low coverage
+SRR16298162	CDC_inhouse	Failed sample, low coverage
+SRR16298161	CDC_inhouse	Failed sample, low coverage breadth
+SRR16298160	CDC_inhouse	Failed sample, ambigous sites (Ns) >3000
+SRR16298159	CDC_inhouse	Failed sample, high host contamination (69%)
+SRR16298158	CDC_inhouse	Failed sample, high host contamination (50%)
+SRR12899254	ARTIC_V3	Failed sample, frameshift leading to VADR failure
+SRR12973280	ARTIC_V3	Failed sample, frameshift leading to VADR failure
+SRR13490700	ARTIC_V3	Failed sample, frameshift leading to VADR failure
+SRR13499308	ARTIC_V3	Failed sample, frameshift leading to VADR failure
+SRR13645688	ARTIC_V3	Failed sample, frameshift leading to VADR failure

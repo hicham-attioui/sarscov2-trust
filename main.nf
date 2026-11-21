@@ -1,25 +1,30 @@
 #!/usr/bin/env nextflow
 /*
- * SARS-CoV-2 amplicon pipeline (ARTIC V3, Illumina paired-end).
- * Nextflow version of scripts/02_pipeline.sh: same tools, same commands, same parameters,
- * so the consensus genomes must be identical to the Bash version.
+ * SARS-CoV-2 amplicon pipeline (Illumina paired-end).
+ * Nextflow version of scripts/02_pipeline.sh: same tools, same commands, same parameters.
  *
  *   FASTP        read QC
  *   BWA_INDEX    index the reference (once)
- *   ALIGN        bwa mem + sort + index
- *   TRIM_PRIMERS ivar trim + sort + index (log keeps reads per primer)
- *   DEPTH        samtools depth -a
+ *   ALIGN        bwa mem + sort + index, plus mapping statistics (samtools flagstat)
+ *   TRIM_PRIMERS ivar trim for ARTIC V3 samples; skipped for other primer schemes,
+ *                because trimming ARTIC positions would corrupt reads made with other primers
+ *   DEPTH        samtools depth -aa (every position, even in a BAM with no mapped reads)
  *   CONSENSUS    samtools mpileup | ivar consensus
- *   NEXTCLADE    clade and Pango lineage of all genomes
+ *   NEXTCLADE    clade, Pango lineage and QC of all genomes
+ *
+ * Sample sheets (tab-separated, no header):
+ *   2 columns: sample, expected lineage            -> ARTIC V3 primers assumed
+ *   3 columns: sample, primer scheme, description  -> primer scheme given per sample
  *
  * Per-sample results are written by each task into a folder named after the sample,
- * declared as outputs, and copied by publishDir to results_nf/<sample>/.
+ * declared as outputs, and copied by publishDir to <outdir>/<sample>/.
  * (publishDir itself is read before any sample exists, so it cannot use the sample name.)
  *
  * Run from the repository root, in the sarscov2 environment:
- *   nextflow run main.nf                 # laptop (local executor)
- *   nextflow run main.nf -resume         # reuse finished tasks
- *   nextflow run main.nf -profile slurm  # HPC cluster (see nextflow.config)
+ *   nextflow run main.nf                                                       # VOI/VOC set
+ *   nextflow run main.nf --samples data/samples_failedqc.tsv --outdir results_failedqc
+ *   nextflow run main.nf -resume                                               # reuse finished tasks
+ *   nextflow run main.nf -profile slurm                                        # HPC cluster
  */
 
 params.samples        = "data/samples.tsv"
@@ -38,10 +43,10 @@ process FASTP {
     publishDir params.outdir, mode: 'copy', pattern: '*/fastp.*'
 
     input:
-    tuple val(sample), path(r1), path(r2)
+    tuple val(sample), val(scheme), path(r1), path(r2)
 
     output:
-    tuple val(sample), path("${sample}_1.trim.fastq.gz"), path("${sample}_2.trim.fastq.gz"), emit: reads
+    tuple val(sample), val(scheme), path("${sample}_1.trim.fastq.gz"), path("${sample}_2.trim.fastq.gz"), emit: reads
     path "${sample}/fastp.*"
 
     script:
@@ -71,19 +76,23 @@ process BWA_INDEX {
 
 process ALIGN {
     tag "$sample"
+    publishDir params.outdir, mode: 'copy', pattern: '*/flagstat.txt'
 
     input:
-    tuple val(sample), path(r1), path(r2)
+    tuple val(sample), val(scheme), path(r1), path(r2)
     tuple path(ref), path(index)           // value channel: reused by every sample
 
     output:
-    tuple val(sample), path("${sample}.sorted.bam"), path("${sample}.sorted.bam.bai")
+    tuple val(sample), val(scheme), path("${sample}.sorted.bam"), path("${sample}.sorted.bam.bai"), emit: bam
+    path "${sample}/flagstat.txt"
 
     script:
     """
+    mkdir -p ${sample}
     bwa mem -t ${task.cpus} ${ref} ${r1} ${r2} 2> bwa.log \\
         | samtools sort -@ ${task.cpus} -o ${sample}.sorted.bam -
     samtools index ${sample}.sorted.bam
+    samtools flagstat ${sample}.sorted.bam > ${sample}/flagstat.txt
     """
 }
 
@@ -93,7 +102,7 @@ process TRIM_PRIMERS {
     publishDir params.outdir, mode: 'copy'
 
     input:
-    tuple val(sample), path(bam), path(bai)
+    tuple val(sample), val(scheme), path(bam), path(bai)
     path primers
 
     output:
@@ -102,13 +111,21 @@ process TRIM_PRIMERS {
     path "${sample}/ivar_trim.log"
 
     script:
-    """
-    mkdir -p ${sample}
-    ivar trim -i ${bam} -b ${primers} -p ${sample}.primertrim -e -q ${params.min_qual} -m 30 \\
-        > ${sample}/ivar_trim.log 2>&1
-    samtools sort -@ ${task.cpus} -o ${sample}/${sample}.primertrim.sorted.bam ${sample}.primertrim.bam
-    samtools index ${sample}/${sample}.primertrim.sorted.bam
-    """
+    if (scheme == 'ARTIC_V3')
+        """
+        mkdir -p ${sample}
+        ivar trim -i ${bam} -b ${primers} -p ${sample}.primertrim -e -q ${params.min_qual} -m 30 \\
+            > ${sample}/ivar_trim.log 2>&1
+        samtools sort -@ ${task.cpus} -o ${sample}/${sample}.primertrim.sorted.bam ${sample}.primertrim.bam
+        samtools index ${sample}/${sample}.primertrim.sorted.bam
+        """
+    else
+        """
+        mkdir -p ${sample}
+        echo "Primer scheme ${scheme}: ARTIC V3 primer trimming skipped" > ${sample}/ivar_trim.log
+        cp ${bam} ${sample}/${sample}.primertrim.sorted.bam
+        samtools index ${sample}/${sample}.primertrim.sorted.bam
+        """
 }
 
 
@@ -125,7 +142,7 @@ process DEPTH {
     script:
     """
     mkdir -p ${sample}
-    samtools depth -a ${bam} > ${sample}/${sample}.depth.txt
+    samtools depth -aa ${bam} > ${sample}/${sample}.depth.txt
     """
 }
 
@@ -171,17 +188,19 @@ process NEXTCLADE {
 
 
 workflow {
-    // one item per sample: (sample, read 1, read 2), from the same sample list as the Bash version
+    // one item per sample: (sample, primer scheme, read 1, read 2)
     reads = channel.fromPath(params.samples)
         .splitCsv(sep: '\t')
-        .map { row -> tuple(row[0],
-                            file("${params.reads}/${row[0]}_1.fastq.gz", checkIfExists: true),
-                            file("${params.reads}/${row[0]}_2.fastq.gz", checkIfExists: true)) }
+        .map { row ->
+            def scheme = row.size() >= 3 ? row[1] : 'ARTIC_V3'
+            tuple(row[0], scheme,
+                  file("${params.reads}/${row[0]}_1.fastq.gz", checkIfExists: true),
+                  file("${params.reads}/${row[0]}_2.fastq.gz", checkIfExists: true)) }
 
     BWA_INDEX(file(params.ref, checkIfExists: true))
     FASTP(reads)
     ALIGN(FASTP.out.reads, BWA_INDEX.out)
-    TRIM_PRIMERS(ALIGN.out, file(params.primers, checkIfExists: true))
+    TRIM_PRIMERS(ALIGN.out.bam, file(params.primers, checkIfExists: true))
     DEPTH(TRIM_PRIMERS.out.bam)
     CONSENSUS(TRIM_PRIMERS.out.bam)
     NEXTCLADE(CONSENSUS.out.collect(sort: true), file(params.nextclade_data, checkIfExists: true))
