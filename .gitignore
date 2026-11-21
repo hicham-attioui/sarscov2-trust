@@ -9,3 +9,9 @@ results/*/*.depth.txt
 *Zone.Identifier
 logs/
 .Rhistory
+work/
+.nextflow/
+.nextflow.log*
+results_nf/*/*.bam
+results_nf/*/*.bai
+results_nf/*/*.depth.txt
