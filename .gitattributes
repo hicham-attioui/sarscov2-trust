@@ -1,1 +1,2 @@
+*.html linguist-generated
 *.R linguist-language=R linguist-detectable=true
