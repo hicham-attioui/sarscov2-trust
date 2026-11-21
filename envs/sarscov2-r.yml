@@ -1,0 +1,9 @@
+name: sarscov2-r
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base
+  - r-patchwork
+  - r-tidyverse
+prefix: /home/attioui_hicham/miniforge3/envs/sarscov2-r

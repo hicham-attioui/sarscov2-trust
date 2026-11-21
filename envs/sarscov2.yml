@@ -1,0 +1,18 @@
+name: sarscov2
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - nextclade
+  - fastqc
+  - samtools
+  - bwa
+  - fastp
+  - ivar
+  - snakemake
+  - bcftools
+  - sra-tools
+  - multiqc
+  - seqkit
+  - nextflow
+prefix: /home/attioui_hicham/miniforge3/envs/sarscov2
