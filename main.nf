@@ -1,41 +1,12 @@
-#!/usr/bin/env nextflow
-/*
- * SARS-CoV-2 amplicon pipeline (Illumina paired-end).
- * Nextflow version of scripts/02_pipeline.sh: same tools, same commands, same parameters.
- *
- *   FASTP        read QC
- *   BWA_INDEX    index the reference (once)
- *   ALIGN        bwa mem + sort + index, plus mapping statistics (samtools flagstat)
- *   TRIM_PRIMERS ivar trim for ARTIC V3 samples; skipped for other primer schemes,
- *                because trimming ARTIC positions would corrupt reads made with other primers
- *   DEPTH        samtools depth -aa (every position, even in a BAM with no mapped reads)
- *   CONSENSUS    samtools mpileup | ivar consensus
- *   NEXTCLADE    clade, Pango lineage and QC of all genomes
- *
- * Sample sheets (tab-separated, no header):
- *   2 columns: sample, expected lineage            -> ARTIC V3 primers assumed
- *   3 columns: sample, primer scheme, description  -> primer scheme given per sample
- *
- * Per-sample results are written by each task into a folder named after the sample,
- * declared as outputs, and copied by publishDir to <outdir>/<sample>/.
- * (publishDir itself is read before any sample exists, so it cannot use the sample name.)
- *
- * Run from the repository root, in the sarscov2 environment:
- *   nextflow run main.nf                                                       # VOI/VOC set
- *   nextflow run main.nf --samples data/samples_failedqc.tsv --outdir results_failedqc
- *   nextflow run main.nf -resume                                               # reuse finished tasks
- *   nextflow run main.nf -profile slurm                                        # HPC cluster
- */
-
 params.samples        = "data/samples.tsv"
 params.reads          = "data/raw"
 params.ref            = "ref/MN908947.3.fasta"
 params.primers        = "ref/nCoV-2019.primer.bed"
 params.nextclade_data = "ref/nextclade_sars-cov-2"
 params.outdir         = "results_nf"
-params.min_depth      = 10       // minimum reads to call a base
-params.min_freq       = 0.75     // minimum share of reads agreeing on the base
-params.min_qual       = 20       // minimum base quality
+params.min_depth      = 10       
+params.min_freq       = 0.75     
+params.min_qual       = 20       
 
 
 process FASTP {
@@ -65,7 +36,7 @@ process BWA_INDEX {
     path ref
 
     output:
-    tuple path(ref), path("${ref}.*")      // the reference and its index files, kept together
+    tuple path(ref), path("${ref}.*")      r
 
     script:
     """
@@ -80,7 +51,7 @@ process ALIGN {
 
     input:
     tuple val(sample), val(scheme), path(r1), path(r2)
-    tuple path(ref), path(index)           // value channel: reused by every sample
+    tuple path(ref), path(index)           
 
     output:
     tuple val(sample), val(scheme), path("${sample}.sorted.bam"), path("${sample}.sorted.bam.bai"), emit: bam
@@ -172,7 +143,7 @@ process NEXTCLADE {
     publishDir params.outdir, mode: 'copy'
 
     input:
-    path consensus                         // all genomes at once (collected)
+    path consensus                        
     path dataset
 
     output:
@@ -188,7 +159,6 @@ process NEXTCLADE {
 
 
 workflow {
-    // one item per sample: (sample, primer scheme, read 1, read 2)
     reads = channel.fromPath(params.samples)
         .splitCsv(sep: '\t')
         .map { row ->
