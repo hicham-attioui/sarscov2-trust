@@ -1,28 +1,3 @@
-# Does the pipeline's QC catch bad samples and keep good ones?
-#
-# Applies the QC rules of the benchmark paper (Xiaoli et al. 2022, PeerJ, Table 2) to both
-# datasets, processed by main.nf:
-#   VOI/VOC   16 samples that passed the authors' QC   -> every sample should PASS
-#   Failed QC 24 samples that failed the authors' QC   -> every sample should FAIL
-#
-# Rules (Illumina), as in the paper, with two adaptations stated below:
-#   Mean base quality (Phred, before filtering)  > 25
-#   Reads mapped to the reference                > 65%
-#   Mean depth                                   > 25   (paper: mean depth > 10 AND mean coverage > 25)
-#   Positions with depth < 10                    < 3,000
-#   Consensus length                             > 29,400
-#   Ns in the consensus                          < 10%
-#   Nextclade frameshift check = good            (replaces the paper's VADR check, not in this pipeline)
-# A missing value (for example no reads at all) counts as a failure.
-#
-# Input : results_nf/ and results_failedqc/ (main.nf outputs), data/samples.tsv,
-#         data/samples_failedqc.tsv
-# Output: results/qc_metrics.tsv, figures/fig2_qc_rules.png/.pdf
-#
-# Run from the repository root, in the R environment:
-#   conda activate sarscov2-r
-#   Rscript scripts/04_qc_check.R
-
 suppressPackageStartupMessages({
   library(tidyverse)
   library(jsonlite)
@@ -34,9 +9,7 @@ DATASETS <- tribble(
   "Failed QC (expected: fail)",      "results_failedqc", "data/samples_failedqc.tsv"
 )
 
-# ---------------------------------------------------------------------------
 # Metrics per sample
-# ---------------------------------------------------------------------------
 read_sheet <- function(path) {
   x <- read_tsv(path, col_names = FALSE, show_col_types = FALSE)
   if (ncol(x) >= 3) tibble(sample = x$X1, description = x$X3)
@@ -83,9 +56,7 @@ metrics <- pmap_dfr(DATASETS, function(dataset, dir, sheet) {
     mutate(dataset = dataset)
 })
 
-# ---------------------------------------------------------------------------
 # Rules
-# ---------------------------------------------------------------------------
 RULES <- c("Mean base quality > 25", "Reads mapped > 65%", "Mean depth > 25",
            "Positions with depth < 10: under 3,000", "Consensus length > 29,400",
            "Ns < 10%", "Nextclade: no frameshift")
@@ -104,9 +75,7 @@ checks <- metrics |>
 checks$pass_all <- apply(checks[RULES], 1, all)
 write_tsv(left_join(metrics, checks |> select(sample, pass_all), by = "sample"), "results/qc_metrics.tsv")
 
-# ---------------------------------------------------------------------------
 # Figure: one row per sample, one column per rule
-# ---------------------------------------------------------------------------
 long <- checks |>
   pivot_longer(all_of(RULES), names_to = "rule", values_to = "passed") |>
   mutate(rule = factor(rule, levels = RULES),
@@ -127,9 +96,7 @@ dir.create("figures", showWarnings = FALSE)
 ggsave("figures/fig2_qc_rules.png", fig, width = 11, height = 10, dpi = 300, bg = "white")
 ggsave("figures/fig2_qc_rules.pdf", fig, width = 11, height = 10)
 
-# ---------------------------------------------------------------------------
 # Summary
-# ---------------------------------------------------------------------------
 options(width = 160)
 cat("\n=== Overall result per dataset ===\n")
 print(checks |> group_by(dataset) |>
